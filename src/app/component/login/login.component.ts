@@ -19,9 +19,7 @@ export class LoginComponent implements OnInit {
 
   loginSubmit(formData: PoPageLogin) {
 
-    this.loginService.validaUsuario(formData).subscribe(value => {
-
-    });
+    this.loginService.validaUsuario(formData) ;
 
     /* if (this.exceededAttempts <= 0) {
      /*  this.poDialog.alert({
