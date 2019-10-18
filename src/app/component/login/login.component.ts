@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   exceededAttempts: number;
 
   constructor(private loginService: LoginService,
-    private router: Router) { }
+              private router: Router) { }
 
   ngOnInit() {
   }
@@ -24,9 +24,9 @@ export class LoginComponent implements OnInit {
     this.loginService.validaUsuario(formData).subscribe(value => {
 
     }, error => {
-      
 
-    })
+
+    });
 
     /* if (this.exceededAttempts <= 0) {
      /*  this.poDialog.alert({

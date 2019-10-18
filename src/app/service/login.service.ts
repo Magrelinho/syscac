@@ -10,20 +10,17 @@ export class LoginService {
 
   public validaUsuario(obj) {
     obj = {
-      login : obj.login,
-      senha : obj.password
+      login: obj.login,
+      senha: obj.password
     };
-    return this.http.post('http://api.syscac.com.br/controller/usuario.php', {
-      method: 'post',
-      body: JSON.stringify(obj),
-      headers: { 'Content-type': 'application/json' }
-    });
+    /* return this.http.post('/controller/usuario.php', {
+       method: 'post',
+       body: JSON.stringify(obj),
+       headers: { 'Content-type': 'application/json' }
+     });*/
 
 
-   /*this.http.post('http://api.syscac.com.br/controller/usuario.php', obj).subscribe(value => {
-      console.log(value);
-
-    });*/
+    return this.http.post('/controller/usuario.php', obj);
 
   }
 
