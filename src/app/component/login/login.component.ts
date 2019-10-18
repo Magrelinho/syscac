@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     this.loginService.validaUsuario(formData).subscribe(value => {
 
     }, error => {
+      
 
     })
 
