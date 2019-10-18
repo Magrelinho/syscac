@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PoPageLogin } from '@portinari/portinari-templates';
 import { LoginService } from 'src/app/service/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,16 +11,21 @@ import { LoginService } from 'src/app/service/login.service';
 export class LoginComponent implements OnInit {
   exceededAttempts: number;
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService,
+    private router: Router) { }
 
   ngOnInit() {
   }
 
-
-
   loginSubmit(formData: PoPageLogin) {
 
-    this.loginService.validaUsuario(formData) ;
+    this.router.navigateByUrl('home');
+
+    this.loginService.validaUsuario(formData).subscribe(value => {
+
+    }, error => {
+
+    })
 
     /* if (this.exceededAttempts <= 0) {
      /*  this.poDialog.alert({
@@ -27,6 +33,6 @@ export class LoginComponent implements OnInit {
          message: JSON.stringify(formData)
        });
      }*/
-   }
+  }
 
 }

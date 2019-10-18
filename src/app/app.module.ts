@@ -7,11 +7,13 @@ import { PoModule } from '@portinari/portinari-ui';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './component/login/login.component';
 import { PoPageLoginModule, PoModalPasswordRecoveryModule } from '@portinari/portinari-templates';
+import { HomeComponent } from './component/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
       ],
   imports: [
     BrowserModule,
