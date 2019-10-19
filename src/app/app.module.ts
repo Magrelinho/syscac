@@ -9,13 +9,16 @@ import { LoginComponent } from './component/login/login.component';
 import { PoPageLoginModule, PoModalPasswordRecoveryModule } from '@portinari/portinari-templates';
 import { HomeComponent } from './component/home/home.component';
 import { PacientesComponent } from './component/pacientes/pacientes.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ExamesComponent } from './component/exames/exames.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    PacientesComponent
+    PacientesComponent,
+    ExamesComponent
       ],
   imports: [
     BrowserModule,
@@ -23,6 +26,7 @@ import { PacientesComponent } from './component/pacientes/pacientes.component';
     PoModule,
     PoPageLoginModule,
     PoModalPasswordRecoveryModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot([])
   ],
   providers: [],

@@ -11,12 +11,12 @@ export class HomeComponent implements OnInit {
   menuItemSelected: string;
 
   menus: Array<PoMenuItem> = [
-    { label: 'Atendimento', icon: 'po-icon-user', shortLabel: 'Atendimento', link: '/home/pacientes' },
-    { label: 'Timekeeping', action: this.printMenuAction, icon: 'po-icon-clock', shortLabel: 'Timekeeping', badge: { value: 1 } },
+    { label: 'Pacientes', icon: 'po-icon-user', shortLabel: 'Pacientes', link: '/home/pacientes' },
+    { label: 'Exames',    icon: 'po-icon-document-filled', shortLabel: 'Exames', link: '/home/exames' , badge: { value: 100 } },
     {
-      label: 'Useful links', icon: 'po-icon-share', shortLabel: 'Links', subItems: [
-        { label: 'Ministry of Labour', action: this.printMenuAction, link: 'http://trabalho.gov.br/' },
-        { label: 'SindPD Syndicate', action: this.printMenuAction, link: 'http://www.sindpd.com.br/' }
+      label: 'Relatorios', icon: 'po-icon-document-double', shortLabel: 'Relatorios', subItems: [
+        { label: 'Mapa Mensal', action: this.printMenuAction, link: 'http://trabalho.gov.br/' },
+        { label: 'Relacao dos candidatos', action: this.printMenuAction, link: 'http://www.sindpd.com.br/' }
       ]
     }];
 

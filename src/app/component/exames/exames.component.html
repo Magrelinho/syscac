@@ -3,7 +3,10 @@
 
         <ng-template p-list-view-content-template let-item>
             <div class="po-row">
-                <po-info class="po-md-6" p-label="Cpf" [p-value]="item.cpf"></po-info>
+                <po-info class="po-md-6" p-label="Tipo Exame" [p-value]="item.tipo_exame"></po-info>
+            </div>
+            <div class="po-row">
+                <po-info class="po-md-6" p-label="RESULTADO AVALIAÇÃO" [p-value]="item.status.descricao"></po-info>
             </div>
         </ng-template>
     </po-list-view>

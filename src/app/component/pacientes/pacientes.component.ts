@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PoListViewAction } from '@portinari/portinari-ui';
+import { PacienteService } from 'src/app/service/pacientes.service';
 
 @Component({
   selector: 'app-pacientes',
@@ -6,10 +8,50 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pacientes.component.css']
 })
 export class PacientesComponent implements OnInit {
+  action: PoListViewAction;
+  items: [];
 
-  constructor() { }
+  readonly actions: Array<PoListViewAction> = [
+    {
+      label: 'Teste Get',
+      action: this.testeGet.bind(this),
+      disabled: this.isHiredOrCanceled.bind(this),
+      icon: 'po-icon-ok'
+    },
+    {
+      label: 'Remover',
+      action: this.cancelCandidate.bind(this),
+      disabled: this.isHiredOrCanceled.bind(this),
+      type: 'danger',
+      icon: 'po-icon-delete'
+    }
+  ];
+
+  constructor(private pacienteService:PacienteService) { }
 
   ngOnInit() {
+
+    this.testeGet();
+
+  }
+
+  private cancelCandidate(selectedCandidate) {
+
+  }
+
+  
+  public testeGet() {
+
+    this.pacienteService.listaPacientes().subscribe(value => {
+      this.items = value['pacientes'];
+
+    })
+
+
+  }
+
+  private isHiredOrCanceled(candidate): boolean {
+    return candidate['hireStatus'] === 'hired' || candidate['hireStatus'] === 'canceled';
   }
 
 }
