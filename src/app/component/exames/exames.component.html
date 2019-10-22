@@ -1,5 +1,24 @@
-<po-page-default>
-    <po-list-view p-property-title="nome" [p-actions]="actions" [p-items]="items">
+<po-page-list 
+            p-title="Exames Pendentens" 
+            [p-actions]="actions" 
+            [p-breadcrumb]="breadcrumb"
+            [p-disclaimer-group]="disclaimerGroup" 
+            [p-filter]="filterSettings">
+
+    <po-table 
+            p-checkbox 
+            p-single-select="true"
+            p-sort="true" 
+            p-striped="true" 
+            [p-columns]="hiringProcessesColumns"
+            [p-items]="hiringProcesses">
+    </po-table>
+</po-page-list>
+
+
+
+
+<!--po-list-view p-property-title="nome" [p-actions]="actions" [p-items]="items">
 
         <ng-template p-list-view-content-template let-item>
             <div class="po-row">
@@ -9,6 +28,4 @@
                 <po-info class="po-md-6" p-label="RESULTADO AVALIAÇÃO" [p-value]="item.status.descricao"></po-info>
             </div>
         </ng-template>
-    </po-list-view>
-
-</po-page-default>
+    </po-list-view-->
