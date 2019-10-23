@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ExamesService } from 'src/app/service/exames.service';
-import { PoTableColumn, PoMultiselectOption, PoCheckboxGroupOption } from '@portinari/portinari-ui';
+import { PoTableColumn, PoMultiselectOption, PoCheckboxGroupOption, PoComboOption } from '@portinari/portinari-ui';
 import { PoPageAction, PoPageFilter } from '@portinari/portinari-ui';
 import { PoModalAction, PoModalComponent } from '@portinari/portinari-ui';
 import { PoBreadcrumb } from '@portinari/portinari-ui';
 import { PoDialogService } from '@portinari/portinari-ui';
 import { PoNotificationService } from '@portinari/portinari-ui';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-exames',
@@ -13,9 +14,7 @@ import { PoNotificationService } from '@portinari/portinari-ui';
   styleUrls: ['./exames.component.css']
 })
 export class ExamesComponent implements OnInit {
-
-  @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
-  
+   
   items: Array<object>;
   hiringProcesses: Array<any>;
   status: Array<any>;
@@ -25,17 +24,46 @@ export class ExamesComponent implements OnInit {
   jobDescription: Array<string> = [];
   jobDescriptionOptions: Array<PoMultiselectOption>;
   labelFilter = '';
-
   statusOptions: Array<PoCheckboxGroupOption>;
+  switch: boolean;
 
   public readonly actions: Array<PoPageAction> = [
-    { label: 'Cadastrar Paciente'},
+    { label: 'Cadastrar Paciente', action:this.openQuestionnaire.bind(this)},
     { label: 'Aprovar'},
     { label: 'qualquer coisa'},
     { label: 'Seila'},
   ];
 
-  constructor(private exameService: ExamesService) { }
+  
+  accompaniment: string = '';
+  fruits: Array<string>;
+  orderDetail: string = '';
+
+  close: PoModalAction = {
+    action: () => {
+      this.closeModal();
+    },
+    label: 'Close',
+    danger: true
+  };
+
+  confirm: PoModalAction = {
+    action: () => {
+      this.confirmaPaciente();
+    },
+    label: 'Confirm'
+  };
+
+
+
+
+  @ViewChild('optionsForm', { static: true }) form: NgForm;
+  @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
+
+  exameMedico: boolean;
+
+  constructor(private exameService: ExamesService,
+              private poNotification: PoNotificationService) { }
 
   ngOnInit() {
     this.exameService.listaExamess().subscribe(value => {
@@ -45,9 +73,33 @@ export class ExamesComponent implements OnInit {
     
     });
 
+    this.switch = undefined;
+
+  }
+  closeModal() {
+    //this.form.reset();
+    this.poModal.close();
   }
 
+  confirmaPaciente() {
+    alert("Method not implemented.");
+  }
+
+  openQuestionnaire() {
+    this.poModal.open();
+  }
   
+  linhaSelecionada(row: any) {
+    if (row) {
+      console.log(row);
+    }
+  }
+
+  selecionaMedico(){
+    return this.exameMedico != this.exameMedico;
+
+  }
+
   getColumns(): Array<PoTableColumn> {
     return [
       {
@@ -67,8 +119,6 @@ export class ExamesComponent implements OnInit {
 
 
   openModal() {
-   
-
     this.poModal.open();
   }
 
