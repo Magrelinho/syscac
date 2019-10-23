@@ -18,7 +18,7 @@
 
 
 <po-modal
-  p-title="Options"
+  p-title="Cadastrar Exames"
   [p-primary-action]="confirm"
   [p-secondary-action]="close">
 
@@ -53,7 +53,7 @@
     </po-select>
 
     <po-switch
-            (p-change)="selecionaMedico()"
+            (p-change)="selecionaExameMedico()"
             p-disabled="boolean"
             p-label="Exame Medico"
             p-label-off="Nao"
@@ -62,16 +62,13 @@
             name="exameMedico"
             p-value>
     </po-switch>
-
-{{exameMedico}} jeffe
     <po-select
-            [p-disabled]='exameMedico'
-            p-label="Habilitacao Pretendida"
+            [p-disabled]='!exameMedico'
             name="">
     </po-select>
 
     <po-switch
-            (p-change)="EventEmitter"
+            (p-change)="selecionaExamePsicotecnico()"
             p-disabled="boolean"
             p-label="Exame Psicotecnico"
             p-label-off="Nao"
@@ -81,8 +78,8 @@
     </po-switch>
 
     <po-select
-            p-label="Psicotecnico"
-            name="">
+            name=""
+            [p-disabled]='!examePsicotecnico'>
     </po-select>
 
   <!--form #optionsForm="ngForm">

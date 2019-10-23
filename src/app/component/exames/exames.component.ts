@@ -7,6 +7,7 @@ import { PoBreadcrumb } from '@portinari/portinari-ui';
 import { PoDialogService } from '@portinari/portinari-ui';
 import { PoNotificationService } from '@portinari/portinari-ui';
 import { NgForm } from '@angular/forms';
+import { GlobalService } from 'src/app/service/global.service';
 
 @Component({
   selector: 'app-exames',
@@ -14,7 +15,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./exames.component.css']
 })
 export class ExamesComponent implements OnInit {
-   
+
   items: Array<object>;
   hiringProcesses: Array<any>;
   status: Array<any>;
@@ -28,13 +29,13 @@ export class ExamesComponent implements OnInit {
   switch: boolean;
 
   public readonly actions: Array<PoPageAction> = [
-    { label: 'Cadastrar Paciente', action:this.openQuestionnaire.bind(this)},
-    { label: 'Aprovar'},
-    { label: 'qualquer coisa'},
-    { label: 'Seila'},
+    { label: 'Cadastrar Paciente', action: this.openQuestionnaire.bind(this) },
+    { label: 'Aprovar' },
+    { label: 'qualquer coisa' },
+    { label: 'Seila' },
   ];
 
-  
+
   accompaniment: string = '';
   fruits: Array<string>;
   orderDetail: string = '';
@@ -43,7 +44,7 @@ export class ExamesComponent implements OnInit {
     action: () => {
       this.closeModal();
     },
-    label: 'Close',
+    label: 'Cancelar',
     danger: true
   };
 
@@ -51,7 +52,7 @@ export class ExamesComponent implements OnInit {
     action: () => {
       this.confirmaPaciente();
     },
-    label: 'Confirm'
+    label: 'Confirmar'
   };
 
 
@@ -61,16 +62,19 @@ export class ExamesComponent implements OnInit {
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
 
   exameMedico: boolean;
+  examePsicotecnico: boolean;
 
   constructor(private exameService: ExamesService,
-              private poNotification: PoNotificationService) { }
+              private poNotification: PoNotificationService,
+              private exameLength: GlobalService) { }
 
   ngOnInit() {
     this.exameService.listaExamess().subscribe(value => {
       // tslint:disable-next-line: no-string-literal
       this.hiringProcessesColumns = this.getColumns();
-      this.hiringProcesses = value['exames']; 
-    
+      this.hiringProcesses = value['exames'];
+      this.exameLength.examesObservable.next(value['exames'].length);
+
     });
 
     this.switch = undefined;
@@ -88,32 +92,36 @@ export class ExamesComponent implements OnInit {
   openQuestionnaire() {
     this.poModal.open();
   }
-  
+
   linhaSelecionada(row: any) {
     if (row) {
       console.log(row);
     }
   }
 
-  selecionaMedico(){
-    return this.exameMedico != this.exameMedico;
+  selecionaExameMedico() {
+    this.exameMedico = !this.exameMedico;
+
+  }
+
+  selecionaExamePsicotecnico() {
+    this.examePsicotecnico = !this.examePsicotecnico;
 
   }
 
   getColumns(): Array<PoTableColumn> {
     return [
-      {
-        property: 'hireStatus', label: 'Status', type: 'subtitle', subtitles: [
-          { value: 'Apto', color: 'success', label: 'Apto', content: '1' },
-          { value: 'Inapto', color: 'danger', label: 'Inapto', content: '2' },
-          { value: 'Inapto Temporario', color: 'warning', label: 'Inapto Temporario', content: '3' },
-          { value: 'Restricao', color: 'color-06', label: 'Restricao', content: '4' },
-          { value: 'Em Andamento', color: 'dot po-color-11', label: 'Em Andamento', content: '5' },
-        ]
-      },
       { property: 'nome', label: 'Nome', type: 'string' },
       { property: 'tipo_exame', label: 'Tipo Exame', type: 'string' },
-      { property: 'descricao', label: 'Descrição', type: 'string' },
+      {
+        property: 'descricao', label:'Status', type: 'label', labels: [
+          { value: 'APTO', color: 'success', label: 'Apto',  },
+          { value: 'INAPTO', color: 'danger', label: 'Inapto',  },
+          { value: 'Inapto Temporario', color: 'warning', label: 'Inapto Temporario',  },
+          { value: 'Restricao', color: 'color-06', label: 'Restricao',  },
+          { value: 'EM ANDAMENTO', color: 'dot po-color-11', label: 'Em Andamento',  },
+        ]
+      }
     ];
   }
 
