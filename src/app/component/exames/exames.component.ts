@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ExamesService } from 'src/app/service/exames.service';
 import { PoTableColumn, PoMultiselectOption, PoCheckboxGroupOption, PoComboOption } from '@portinari/portinari-ui';
-import { PoPageAction, PoPageFilter } from '@portinari/portinari-ui';
-import { PoModalAction, PoModalComponent } from '@portinari/portinari-ui';
-import { PoBreadcrumb } from '@portinari/portinari-ui';
-import { PoDialogService } from '@portinari/portinari-ui';
+import { PoPageAction, PoModalAction, PoModalComponent, PoFieldModule, PoSelectOption } from '@portinari/portinari-ui';
 import { PoNotificationService } from '@portinari/portinari-ui';
 import { NgForm } from '@angular/forms';
 import { GlobalService } from 'src/app/service/global.service';
+import { PacienteService } from 'src/app/service/pacientes.service';
 
 @Component({
   selector: 'app-exames',
@@ -20,6 +18,7 @@ export class ExamesComponent implements OnInit {
   hiringProcesses: Array<any>;
   status: Array<any>;
   disclaimerGroup;
+  paciente = {};
   hiringProcessesColumns: Array<PoTableColumn>;
   hiringProcessesFiltered: Array<object>;
   jobDescription: Array<string> = [];
@@ -27,6 +26,12 @@ export class ExamesComponent implements OnInit {
   labelFilter = '';
   statusOptions: Array<PoCheckboxGroupOption>;
   switch: boolean;
+  exameMedico: boolean;
+  examePsicotecnico: boolean;
+  nome: string;
+  pacienteCnh: Array<PoSelectOption>;
+
+
 
   public readonly actions: Array<PoPageAction> = [
     { label: 'Cadastrar Paciente', action: this.openQuestionnaire.bind(this) },
@@ -34,11 +39,6 @@ export class ExamesComponent implements OnInit {
     { label: 'qualquer coisa' },
     { label: 'Seila' },
   ];
-
-
-  accompaniment: string = '';
-  fruits: Array<string>;
-  orderDetail: string = '';
 
   close: PoModalAction = {
     action: () => {
@@ -55,18 +55,14 @@ export class ExamesComponent implements OnInit {
     label: 'Confirmar'
   };
 
-
-
-
   @ViewChild('optionsForm', { static: true }) form: NgForm;
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
 
-  exameMedico: boolean;
-  examePsicotecnico: boolean;
+
 
   constructor(private exameService: ExamesService,
-              private poNotification: PoNotificationService,
-              private exameLength: GlobalService) { }
+    private poNotification: PoNotificationService,
+    private exameLength: GlobalService) { }
 
   ngOnInit() {
     this.exameService.listaExamess().subscribe(value => {
@@ -76,17 +72,35 @@ export class ExamesComponent implements OnInit {
       this.exameLength.examesObservable.next(value['exames'].length);
 
     });
-
+    this.buscaCnh();
     this.switch = undefined;
+  }
 
+  buscaCnh() {
+    this.exameService.buscaCnh().subscribe(value => {
+     // this.pacienteCnh = value['cnh'];
+     
+
+     value['cnh'].forEach(element => {
+      element.label = element.descricao
+      element.value = element.id
+      this.pacienteCnh.push(element);
+       
+     });
+     this.pacienteCnh
+
+    })
   }
   closeModal() {
     //this.form.reset();
     this.poModal.close();
+
   }
 
   confirmaPaciente() {
-    alert("Method not implemented.");
+    this.exameService.cadastraExame(this.paciente).subscribe(() => {
+      alert('foi');
+    });
   }
 
   openQuestionnaire() {
@@ -109,17 +123,19 @@ export class ExamesComponent implements OnInit {
 
   }
 
+
   getColumns(): Array<PoTableColumn> {
     return [
       { property: 'nome', label: 'Nome', type: 'string' },
       { property: 'tipo_exame', label: 'Tipo Exame', type: 'string' },
+      { property: 'data_avaliacao', label: 'Data Exame', type: 'date' },
       {
-        property: 'descricao', label:'Status', type: 'label', labels: [
-          { value: 'APTO', color: 'success', label: 'Apto',  },
-          { value: 'INAPTO', color: 'danger', label: 'Inapto',  },
-          { value: 'Inapto Temporario', color: 'warning', label: 'Inapto Temporario',  },
-          { value: 'Restricao', color: 'color-06', label: 'Restricao',  },
-          { value: 'EM ANDAMENTO', color: 'dot po-color-11', label: 'Em Andamento',  },
+        property: 'id_status', label: 'Status', type: 'label', labels: [
+          { value: '1', color: 'success', label: 'Apto', },
+          { value: '2', color: 'danger', label: 'Inapto', },
+          { value: '3', color: 'warning', label: 'Inapto Temporario', },
+          { value: '4', color: 'color-06', label: 'Restricao', },
+          { value: '5', color: 'color-11', label: "EM ANDAMENTO" },
         ]
       }
     ];

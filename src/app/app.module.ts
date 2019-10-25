@@ -11,6 +11,7 @@ import { HomeComponent } from './component/home/home.component';
 import { PacientesComponent } from './component/pacientes/pacientes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExamesComponent } from './component/exames/exames.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ExamesComponent } from './component/exames/exames.component';
     BrowserModule,
     AppRoutingModule,
     PoModule,
+    FormsModule,
     PoPageLoginModule,
     PoModalPasswordRecoveryModule,
     BrowserAnimationsModule,

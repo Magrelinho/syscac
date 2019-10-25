@@ -23,34 +23,37 @@
   [p-secondary-action]="close">
 
     <po-input
-        name="input"
+        name="nome"
+        [(ngModel)]="paciente.nome"
         p-label="Nome">
     </po-input>
 
-    <po-input
-        name="input"
-        p-label="Cpf">
-    </po-input>
 
+    <po-input
+        name="cpf"
+        [(ngModel)]="paciente.cpf"
+        p-label="CPF">
+    </po-input>
+{{pacienteCnh}}
     <po-select
         p-label="CNH"
-        name="CNH">
+        p-placeholder="Selecione a Cnh desejada"
+        [p-options]="pacienteCnh"
+        [(ngModel)]="paciente.cnh_id"
+        name="cnh_id">
     </po-select>
 
     <po-select
             p-label="Habilitacao Pretendida"
-            name="">
+            [(ngModel)]="paciente.habilita_id"
+            name=habilita_id>
     </po-select>
  
     <po-datepicker
-                name="datepicker"
+                name="data_avaliacao"
+                [(ngModel)]="paciente.data_avaliacao"
                 p-label="Data Avaliacao">
     </po-datepicker>
-
-    <po-select
-            p-label="Habilitacao Pretendida"
-            name="">
-    </po-select>
 
     <po-switch
             (p-change)="selecionaExameMedico()"
@@ -64,7 +67,8 @@
     </po-switch>
     <po-select
             [p-disabled]='!exameMedico'
-            name="">
+            [(ngModel)]="paciente.medico_id"
+            name="medico_id">
     </po-select>
 
     <po-switch
@@ -78,64 +82,8 @@
     </po-switch>
 
     <po-select
-            name=""
+            name="psico_id"
+            [(ngModel)]="paciente.psico_id"
             [p-disabled]='!examePsicotecnico'>
     </po-select>
-
-  <!--form #optionsForm="ngForm">
-    <div class="po-row">
-      <po-checkbox-group
-        class="po-md-12"
-        name="checkboxGroup"
-        [(ngModel)]="fruits"
-        p-label="Fruits:"
-        p-required
-        [p-options]="fruitsOptions">
-      </po-checkbox-group>
-    </div>
-
-     <po-checkbox-group
-                class="po-md-12"
-                name="checkboxGroup"
-                p-label="Fruits:"
-                p-required
-                [p-options]="fruitsOptions">
-</po-checkbox-group>
-
-    <div class="po-row">
-      <po-combo
-        class="po-md-12"
-        name="accompaniment"
-        [(ngModel)]="accompaniment"
-        p-label="Accompaniment:"
-        p-required
-        [p-options]="accompanimentOptions">
-      </po-combo>
-    </div>
-
-    <div class="po-row">
-      <po-textarea
-        class="po-md-12"
-        name="orderDetail"
-        [(ngModel)]="orderDetail"
-        p-label="Details:"
-        p-rows="8">
-      </po-textarea>
-    </div>
-  </form-->
-
 </po-modal>
-
-
-
-<!--po-list-view p-property-title="nome" [p-actions]="actions" [p-items]="items">
-
-        <ng-template p-list-view-content-template let-item>
-            <div class="po-row">
-                <po-info class="po-md-6" p-label="Tipo Exame" [p-value]="item.tipo_exame"></po-info>
-            </div>
-            <div class="po-row">
-                <po-info class="po-md-6" p-label="RESULTADO AVALIAÇÃO" [p-value]="item.status.descricao"></po-info>
-            </div>
-        </ng-template>
-    </po-list-view-->
