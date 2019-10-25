@@ -30,6 +30,8 @@ export class ExamesComponent implements OnInit {
   examePsicotecnico: boolean;
   nome: string;
   pacienteCnh: Array<PoSelectOption>;
+  pacienteHabilitacao: Array<PoSelectOption>;
+  medico: Array<PoSelectOption>;
 
 
 
@@ -61,8 +63,8 @@ export class ExamesComponent implements OnInit {
 
 
   constructor(private exameService: ExamesService,
-    private poNotification: PoNotificationService,
-    private exameLength: GlobalService) { }
+              private poNotification: PoNotificationService,
+              private exameLength: GlobalService) { }
 
   ngOnInit() {
     this.exameService.listaExamess().subscribe(value => {
@@ -72,29 +74,49 @@ export class ExamesComponent implements OnInit {
       this.exameLength.examesObservable.next(value['exames'].length);
 
     });
-    this.buscaCnh();
+    this.carregaCnh();
+    this.carregaHabilitacao();
+    this.carregaMedicos();
     this.switch = undefined;
   }
 
-  buscaCnh() {
+  carregaCnh() {
     this.exameService.buscaCnh().subscribe(value => {
-     // this.pacienteCnh = value['cnh'];
-     
-
-     value['cnh'].forEach(element => {
-      element.label = element.descricao
-      element.value = element.id
-      this.pacienteCnh.push(element);
-       
-     });
-     this.pacienteCnh
-
-    })
+      this.pacienteCnh = [];
+      value['cnh'].forEach(element => {
+        element.label = element.descricao;
+        element.value = element.id;
+        this.pacienteCnh.push(element);
+      });
+    });
   }
+
+  carregaHabilitacao() {
+    this.exameService.buscahabilitacao().subscribe(value => {
+      this.pacienteHabilitacao = [];
+      value['habilitacao'].forEach(element => {
+        element.label = element.descricao;
+        element.value = element.id;
+        this.pacienteHabilitacao.push(element);
+      });
+    });
+  }
+
+  carregaMedicos() {
+    this.exameService.buscaMedicos(1).subscribe(value => {
+      this.medico = [];
+      value['profissionais'].forEach(element => {
+        element.label = element.nome;
+        element.value = element.id;
+        this.medico.push(element);
+      });
+    });
+  }
+
+
   closeModal() {
     //this.form.reset();
     this.poModal.close();
-
   }
 
   confirmaPaciente() {

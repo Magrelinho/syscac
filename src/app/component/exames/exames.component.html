@@ -34,7 +34,6 @@
         [(ngModel)]="paciente.cpf"
         p-label="CPF">
     </po-input>
-{{pacienteCnh}}
     <po-select
         p-label="CNH"
         p-placeholder="Selecione a Cnh desejada"
@@ -42,10 +41,11 @@
         [(ngModel)]="paciente.cnh_id"
         name="cnh_id">
     </po-select>
-
     <po-select
             p-label="Habilitacao Pretendida"
+            p-placeholder="Selecione habilitação pretendida"
             [(ngModel)]="paciente.habilita_id"
+            [p-options]="pacienteHabilitacao"
             name=habilita_id>
     </po-select>
  
@@ -68,6 +68,7 @@
     <po-select
             [p-disabled]='!exameMedico'
             [(ngModel)]="paciente.medico_id"
+            [p-options]="medico"
             name="medico_id">
     </po-select>
 
