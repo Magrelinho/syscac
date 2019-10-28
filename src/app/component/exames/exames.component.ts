@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ExamesService } from 'src/app/service/exames.service';
-import { PoTableColumn, PoMultiselectOption, PoCheckboxGroupOption, PoComboOption } from '@portinari/portinari-ui';
-import { PoPageAction, PoModalAction, PoModalComponent, PoFieldModule, PoSelectOption } from '@portinari/portinari-ui';
+// tslint:disable-next-line: max-line-length
+import { PoTableColumn, PoMultiselectOption, PoCheckboxGroupOption, PoDialogService, PoDialogAlertLiterals, PoDialogConfirmLiterals} from '@portinari/portinari-ui';
+import { PoPageAction, PoModalAction, PoModalComponent, PoSelectOption } from '@portinari/portinari-ui';
 import { PoNotificationService } from '@portinari/portinari-ui';
 import { NgForm } from '@angular/forms';
 import { GlobalService } from 'src/app/service/global.service';
 import { PacienteService } from 'src/app/service/pacientes.service';
+import { PoDialogModule } from '@portinari/portinari-ui';
 
 @Component({
   selector: 'app-exames',
@@ -32,14 +34,18 @@ export class ExamesComponent implements OnInit {
   pacienteCnh: Array<PoSelectOption>;
   pacienteHabilitacao: Array<PoSelectOption>;
   medico: Array<PoSelectOption>;
-
+  psicotecnico: Array<PoSelectOption>;
+  message: string;
+  title: string;
+  literalsAlert: PoDialogAlertLiterals;
+  exameSelecionado: any;
 
 
   public readonly actions: Array<PoPageAction> = [
     { label: 'Cadastrar Paciente', action: this.openQuestionnaire.bind(this) },
-    { label: 'Aprovar' },
-    { label: 'qualquer coisa' },
-    { label: 'Seila' },
+    { label: 'Gerar cobrança', action: this.geraBoleto.bind(this) },
+    { label: 'Beta' },
+    { label: 'Beta' },
   ];
 
   close: PoModalAction = {
@@ -59,12 +65,15 @@ export class ExamesComponent implements OnInit {
 
   @ViewChild('optionsForm', { static: true }) form: NgForm;
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
-
+  literalsConfirm: PoDialogConfirmLiterals;
+  actionOptions: Array<string>;
+  action: string;
 
 
   constructor(private exameService: ExamesService,
               private poNotification: PoNotificationService,
-              private exameLength: GlobalService) { }
+              private exameLength: GlobalService,
+              private poAlert: PoDialogService) { }
 
   ngOnInit() {
     this.exameService.listaExamess().subscribe(value => {
@@ -77,6 +86,7 @@ export class ExamesComponent implements OnInit {
     this.carregaCnh();
     this.carregaHabilitacao();
     this.carregaMedicos();
+    this.carregaPsicotecnicos();
     this.switch = undefined;
   }
 
@@ -90,6 +100,7 @@ export class ExamesComponent implements OnInit {
       });
     });
   }
+
 
   carregaHabilitacao() {
     this.exameService.buscahabilitacao().subscribe(value => {
@@ -113,6 +124,17 @@ export class ExamesComponent implements OnInit {
     });
   }
 
+  carregaPsicotecnicos() {
+    this.exameService.buscaMedicos(2).subscribe(value => {
+      this.psicotecnico = [];
+      value['profissionais'].forEach(element => {
+        element.label = element.nome;
+        element.value = element.id;
+        this.psicotecnico.push(element);
+      });
+    });
+  }
+
 
   closeModal() {
     //this.form.reset();
@@ -125,12 +147,25 @@ export class ExamesComponent implements OnInit {
     });
   }
 
+  geraBoleto() {
+    console.log(this.exameSelecionado);
+    this.poAlert.confirm({
+      literals: this.literalsConfirm,
+      title: 'Gerar boleto para cobrança',
+      message: 'Deseja gerar boleto de cobrança para ' +  this.exameSelecionado.nome + '?',
+      confirm: () => this.actionOptions.includes('confirm') ? this.action = 'Confirm' : undefined,
+      cancel: () => this.closeModal()
+    });
+
+  }
+
   openQuestionnaire() {
     this.poModal.open();
   }
 
   linhaSelecionada(row: any) {
     if (row) {
+      this.exameSelecionado = row;
       console.log(row);
     }
   }

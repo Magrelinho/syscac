@@ -27,8 +27,6 @@
         [(ngModel)]="paciente.nome"
         p-label="Nome">
     </po-input>
-
-
     <po-input
         name="cpf"
         [(ngModel)]="paciente.cpf"
@@ -84,6 +82,7 @@
 
     <po-select
             name="psico_id"
+            [p-options]="psicotecnico"
             [(ngModel)]="paciente.psico_id"
             [p-disabled]='!examePsicotecnico'>
     </po-select>

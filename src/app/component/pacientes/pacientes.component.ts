@@ -15,13 +15,13 @@ export class PacientesComponent implements OnInit {
     {
       label: 'Teste Get',
       action: this.testeGet.bind(this),
-      disabled: this.isHiredOrCanceled.bind(this),
+      disabled: this.cancelCandidate.bind(this),
       icon: 'po-icon-ok'
     },
     {
       label: 'Remover',
       action: this.cancelCandidate.bind(this),
-      disabled: this.isHiredOrCanceled.bind(this),
+      disabled: this.cancelCandidate.bind(this),
       type: 'danger',
       icon: 'po-icon-delete'
     }
@@ -39,19 +39,9 @@ export class PacientesComponent implements OnInit {
 
   }
 
-  
   public testeGet() {
-
     this.pacienteService.listaPacientes().subscribe(value => {
       this.items = value['pacientes'];
-
-    })
-
-
+    });
   }
-
-  private isHiredOrCanceled(candidate): boolean {
-    return candidate['hireStatus'] === 'hired' || candidate['hireStatus'] === 'canceled';
-  }
-
 }
