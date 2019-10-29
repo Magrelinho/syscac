@@ -4,19 +4,17 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class BoletoService {
 
   constructor(private http: HttpClient) { }
 
-  public validaUsuario(obj) {
+  public gerarBoleto(obj) {
     obj = {
-      login: obj.login,
-      senha: obj.password
+      walletId: obj.walletId,
+      asaas_id: obj.asaas_id
     };
     
-    return this.http.post('/controller/usuario.php', obj);
+    return this.http.post('/controller/asaas.php', obj);
 
   }
-
-
 }

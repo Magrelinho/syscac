@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ExamesService } from 'src/app/service/exames.service';
 // tslint:disable-next-line: max-line-length
-import { PoTableColumn, PoMultiselectOption, PoCheckboxGroupOption, PoDialogService, PoDialogAlertLiterals, PoDialogConfirmLiterals} from '@portinari/portinari-ui';
+import { PoTableColumn, PoMultiselectOption, PoCheckboxGroupOption, PoDialogService, PoDialogAlertLiterals, PoDialogConfirmLiterals } from '@portinari/portinari-ui';
 import { PoPageAction, PoModalAction, PoModalComponent, PoSelectOption } from '@portinari/portinari-ui';
 import { PoNotificationService } from '@portinari/portinari-ui';
 import { NgForm } from '@angular/forms';
 import { GlobalService } from 'src/app/service/global.service';
 import { PacienteService } from 'src/app/service/pacientes.service';
 import { PoDialogModule } from '@portinari/portinari-ui';
+import { BoletoService } from 'src/app/service/boleto.service';
 
 @Component({
   selector: 'app-exames',
@@ -73,7 +74,8 @@ export class ExamesComponent implements OnInit {
   constructor(private exameService: ExamesService,
               private poNotification: PoNotificationService,
               private exameLength: GlobalService,
-              private poAlert: PoDialogService) { }
+              private poAlert: PoDialogService,
+              private boletoService:BoletoService) { }
 
   ngOnInit() {
     this.exameService.listaExamess().subscribe(value => {
@@ -148,12 +150,12 @@ export class ExamesComponent implements OnInit {
   }
 
   geraBoleto() {
-    console.log(this.exameSelecionado);
     this.poAlert.confirm({
+
       literals: this.literalsConfirm,
       title: 'Gerar boleto para cobrança',
-      message: 'Deseja gerar boleto de cobrança para ' +  this.exameSelecionado.nome + '?',
-      confirm: () => this.actionOptions.includes('confirm') ? this.action = 'Confirm' : undefined,
+      message: 'Deseja gerar boleto de cobrança para ' + this.exameSelecionado.nome + '?',
+      confirm: () => this.confirmaBoleto(),
       cancel: () => this.closeModal()
     });
 
@@ -162,6 +164,16 @@ export class ExamesComponent implements OnInit {
   openQuestionnaire() {
     this.poModal.open();
   }
+
+  confirmaBoleto() {
+    this.boletoService.gerarBoleto(this.exameSelecionado).subscribe(value => {
+    console.log(value);
+
+    });
+    this.closeModal()
+
+  }
+
 
   linhaSelecionada(row: any) {
     if (row) {
