@@ -27,7 +27,7 @@ export class PacientesComponent implements OnInit {
     }
   ];
 
-  constructor(private pacienteService:PacienteService) { }
+  constructor(private pacienteService: PacienteService) { }
 
   ngOnInit() {
 

@@ -6,8 +6,6 @@ import { PoPageAction, PoModalAction, PoModalComponent, PoSelectOption } from '@
 import { PoNotificationService } from '@portinari/portinari-ui';
 import { NgForm } from '@angular/forms';
 import { GlobalService } from 'src/app/service/global.service';
-import { PacienteService } from 'src/app/service/pacientes.service';
-import { PoDialogModule } from '@portinari/portinari-ui';
 import { BoletoService } from 'src/app/service/boleto.service';
 
 @Component({
@@ -21,7 +19,7 @@ export class ExamesComponent implements OnInit {
   hiringProcesses: Array<any>;
   status: Array<any>;
   disclaimerGroup;
-  paciente = {};
+  paciente = {data_avaliacao: new Date()};
   hiringProcessesColumns: Array<PoTableColumn>;
   hiringProcessesFiltered: Array<object>;
   jobDescription: Array<string> = [];
@@ -40,7 +38,6 @@ export class ExamesComponent implements OnInit {
   title: string;
   literalsAlert: PoDialogAlertLiterals;
   exameSelecionado: any;
-
 
   public readonly actions: Array<PoPageAction> = [
     { label: 'Cadastrar Paciente', action: this.openQuestionnaire.bind(this) },
@@ -75,26 +72,27 @@ export class ExamesComponent implements OnInit {
               private poNotification: PoNotificationService,
               private exameLength: GlobalService,
               private poAlert: PoDialogService,
-              private boletoService:BoletoService) { }
+              private boletoService: BoletoService) { }
 
   ngOnInit() {
     this.exameService.listaExamess().subscribe(value => {
-      // tslint:disable-next-line: no-string-literal
       this.hiringProcessesColumns = this.getColumns();
       this.hiringProcesses = value['exames'];
       this.exameLength.examesObservable.next(value['exames'].length);
 
     });
+    this.pacienteCnh = [];
+    this.pacienteHabilitacao = [];
+    this.medico = [];
+    this.psicotecnico = [];
+    this.switch = undefined;
     this.carregaCnh();
     this.carregaHabilitacao();
-    this.carregaMedicos();
-    this.carregaPsicotecnicos();
-    this.switch = undefined;
   }
 
   carregaCnh() {
     this.exameService.buscaCnh().subscribe(value => {
-      this.pacienteCnh = [];
+    //  this.pacienteCnh = [];
       value['cnh'].forEach(element => {
         element.label = element.descricao;
         element.value = element.id;
@@ -103,10 +101,8 @@ export class ExamesComponent implements OnInit {
     });
   }
 
-
   carregaHabilitacao() {
     this.exameService.buscahabilitacao().subscribe(value => {
-      this.pacienteHabilitacao = [];
       value['habilitacao'].forEach(element => {
         element.label = element.descricao;
         element.value = element.id;
@@ -117,7 +113,6 @@ export class ExamesComponent implements OnInit {
 
   carregaMedicos() {
     this.exameService.buscaMedicos(1).subscribe(value => {
-      this.medico = [];
       value['profissionais'].forEach(element => {
         element.label = element.nome;
         element.value = element.id;
@@ -128,7 +123,6 @@ export class ExamesComponent implements OnInit {
 
   carregaPsicotecnicos() {
     this.exameService.buscaMedicos(2).subscribe(value => {
-      this.psicotecnico = [];
       value['profissionais'].forEach(element => {
         element.label = element.nome;
         element.value = element.id;
@@ -137,21 +131,19 @@ export class ExamesComponent implements OnInit {
     });
   }
 
-
   closeModal() {
-    //this.form.reset();
     this.poModal.close();
   }
 
   confirmaPaciente() {
     this.exameService.cadastraExame(this.paciente).subscribe(() => {
-      alert('foi');
+      this.poNotification.success('Exame cadastrado com sucesso!');
     });
+    this.closeModal();
   }
 
   geraBoleto() {
     this.poAlert.confirm({
-
       literals: this.literalsConfirm,
       title: 'Gerar boleto para cobrança',
       message: 'Deseja gerar boleto de cobrança para ' + this.exameSelecionado.nome + '?',
@@ -168,12 +160,9 @@ export class ExamesComponent implements OnInit {
   confirmaBoleto() {
     this.boletoService.gerarBoleto(this.exameSelecionado).subscribe(value => {
     console.log(value);
-
     });
-    this.closeModal()
-
+    this.closeModal();
   }
-
 
   linhaSelecionada(row: any) {
     if (row) {
@@ -184,14 +173,17 @@ export class ExamesComponent implements OnInit {
 
   selecionaExameMedico() {
     this.exameMedico = !this.exameMedico;
-
+    if ( this.exameMedico === true && this.medico.length === 0 ) {
+        this.carregaMedicos();
+    }
   }
 
   selecionaExamePsicotecnico() {
     this.examePsicotecnico = !this.examePsicotecnico;
-
+    if ( this.examePsicotecnico === true && this.psicotecnico.length === 0 ) {
+      this.carregaPsicotecnicos();
+    }
   }
-
 
   getColumns(): Array<PoTableColumn> {
     return [

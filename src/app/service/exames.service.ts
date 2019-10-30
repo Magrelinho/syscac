@@ -17,7 +17,7 @@ export class ExamesService {
   }
 
   public buscaCnh() {
-    return this.http.get('/controller/cnh.php', {})
+    return this.http.get('/controller/cnh.php', {});
   }
 
   public buscahabilitacao() {
