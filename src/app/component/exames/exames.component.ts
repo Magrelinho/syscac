@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ExamesService } from 'src/app/service/exames.service';
 // tslint:disable-next-line: max-line-length
-import { PoTableColumn, PoMultiselectOption, PoCheckboxGroupOption, PoDialogService, PoDialogAlertLiterals, PoDialogConfirmLiterals } from '@portinari/portinari-ui';
+import { PoTableColumn, PoMultiselectOption, PoCheckboxGroupOption, PoDialogService, PoDialogAlertLiterals, PoDialogConfirmLiterals, PoTableAction } from '@portinari/portinari-ui';
 import { PoPageAction, PoModalAction, PoModalComponent, PoSelectOption } from '@portinari/portinari-ui';
 import { PoNotificationService } from '@portinari/portinari-ui';
 import { NgForm } from '@angular/forms';
@@ -19,7 +19,7 @@ export class ExamesComponent implements OnInit {
   hiringProcesses: Array<any>;
   status: Array<any>;
   disclaimerGroup;
-  paciente = {data_avaliacao: new Date()};
+  paciente = { data_avaliacao: new Date() };
   hiringProcessesColumns: Array<PoTableColumn>;
   hiringProcessesFiltered: Array<object>;
   jobDescription: Array<string> = [];
@@ -40,11 +40,15 @@ export class ExamesComponent implements OnInit {
   exameSelecionado: any;
 
   public readonly actions: Array<PoPageAction> = [
-    { label: 'Cadastrar Paciente', action: this.openQuestionnaire.bind(this) },
-    { label: 'Gerar cobrança', action: this.geraBoleto.bind(this) },
-    { label: 'Beta' },
-    { label: 'Beta' },
+    { label: 'Cadastrar Paciente', action: this.openQuestionnaire.bind(this), icon: 'po-icon-user-add' },
   ];
+
+  public readonly actionsTable: Array<PoTableAction> = [
+    { label: 'Gerar Boleto', action: this.geraBoleto.bind(this), icon: 'po-icon-bar-code' },
+    { label: 'Resultado', action: this.geraBoleto.bind(this), icon: 'po-icon-target' },
+    { label: 'Remover', action: this.openQuestionnaire.bind(this), icon: 'po-icon-delete' },
+  ];
+
 
   close: PoModalAction = {
     action: () => {
@@ -92,7 +96,7 @@ export class ExamesComponent implements OnInit {
 
   carregaCnh() {
     this.exameService.buscaCnh().subscribe(value => {
-    //  this.pacienteCnh = [];
+      //  this.pacienteCnh = [];
       value['cnh'].forEach(element => {
         element.label = element.descricao;
         element.value = element.id;
@@ -159,7 +163,7 @@ export class ExamesComponent implements OnInit {
 
   confirmaBoleto() {
     this.boletoService.gerarBoleto(this.exameSelecionado).subscribe(value => {
-    console.log(value);
+      console.log(value);
     });
     this.closeModal();
   }
@@ -173,30 +177,30 @@ export class ExamesComponent implements OnInit {
 
   selecionaExameMedico() {
     this.exameMedico = !this.exameMedico;
-    if ( this.exameMedico === true && this.medico.length === 0 ) {
-        this.carregaMedicos();
+    if (this.exameMedico === true && this.medico.length === 0) {
+      this.carregaMedicos();
     }
   }
 
   selecionaExamePsicotecnico() {
     this.examePsicotecnico = !this.examePsicotecnico;
-    if ( this.examePsicotecnico === true && this.psicotecnico.length === 0 ) {
+    if (this.examePsicotecnico === true && this.psicotecnico.length === 0) {
       this.carregaPsicotecnicos();
     }
   }
 
   getColumns(): Array<PoTableColumn> {
     return [
-      { property: 'nome', label: 'Nome', type: 'string' },
-      { property: 'tipo_exame', label: 'Tipo Exame', type: 'string' },
-      { property: 'data_avaliacao', label: 'Data Exame', type: 'date' },
+      { property: 'nome', label: 'Nome', type: 'string', width: '30%' },
+      { property: 'tipo_exame', label: 'Tipo Exame', type: 'string', width: '10%' },
+      { property: 'data_avaliacao', label: 'Data Exame', type: 'date', width: '10%' },
       {
-        property: 'id_status', label: 'Status', type: 'label', labels: [
+        property: 'id_status', label: 'Status', type: 'label', width: '15%', labels: [
           { value: '1', color: 'success', label: 'Apto', },
           { value: '2', color: 'danger', label: 'Inapto', },
           { value: '3', color: 'warning', label: 'Inapto Temporario', },
           { value: '4', color: 'color-06', label: 'Restricao', },
-          { value: '5', color: 'color-11', label: "EM ANDAMENTO" },
+          { value: '5', color: 'color-11', label: 'EM ANDAMENTO' },
         ]
       }
     ];
