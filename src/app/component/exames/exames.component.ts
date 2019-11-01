@@ -19,13 +19,12 @@ export class ExamesComponent implements OnInit {
   hiringProcesses: Array<any>;
   status: Array<any>;
   disclaimerGroup;
-  paciente: any;
+  paciente = { data_avaliacao: new Date() };
   hiringProcessesColumns: Array<PoTableColumn>;
   hiringProcessesFiltered: Array<object>;
   jobDescription: Array<string> = [];
   jobDescriptionOptions: Array<PoMultiselectOption>;
   labelFilter = '';
-  data_avaliacao = new Date();
   statusOptions: Array<PoCheckboxGroupOption>;
   switch: boolean;
   exameMedico: boolean;
