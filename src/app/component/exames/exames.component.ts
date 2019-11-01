@@ -45,8 +45,8 @@ export class ExamesComponent implements OnInit {
 
   public readonly actionsTable: Array<PoTableAction> = [
     { label: 'Gerar Boleto', action: this.geraBoleto.bind(this), icon: 'po-icon-bar-code' },
-    { label: 'Resultado', action: this.geraBoleto.bind(this), icon: 'po-icon-target' },
-    { label: 'Remover', action: this.openQuestionnaire.bind(this), icon: 'po-icon-delete' },
+    { label: 'Resultado', action: this.openQuestionnaire.bind(this), icon: 'po-icon-target' },
+    { label: 'Remover', action: this.removerExame.bind(this), icon: 'po-icon-delete' },
   ];
 
 
@@ -159,6 +159,14 @@ export class ExamesComponent implements OnInit {
 
   openQuestionnaire() {
     this.poModal.open();
+  }
+
+  removerExame() {
+    this.hiringProcesses.forEach((item, index) => {
+      if (item.id === this.exameSelecionado.id) {
+        this.hiringProcesses.splice(index, 1);
+      }
+    });
   }
 
   confirmaBoleto() {
