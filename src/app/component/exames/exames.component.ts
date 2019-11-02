@@ -7,6 +7,7 @@ import { PoNotificationService } from '@portinari/portinari-ui';
 import { NgForm } from '@angular/forms';
 import { GlobalService } from 'src/app/service/global.service';
 import { BoletoService } from 'src/app/service/boleto.service';
+import { Pacientes } from 'src/app/interface/pacientes'
 
 @Component({
   selector: 'app-exames',
@@ -16,28 +17,23 @@ import { BoletoService } from 'src/app/service/boleto.service';
 export class ExamesComponent implements OnInit {
 
   items: Array<object>;
-  hiringProcesses: Array<any>;
+  exameValue: Array<any>;
   status: Array<any>;
-  disclaimerGroup;
-  paciente = { data_avaliacao: new Date() };
-  hiringProcessesColumns: Array<PoTableColumn>;
-  hiringProcessesFiltered: Array<object>;
-  jobDescription: Array<string> = [];
-  jobDescriptionOptions: Array<PoMultiselectOption>;
-  labelFilter = '';
-  statusOptions: Array<PoCheckboxGroupOption>;
-  switch: boolean;
+  paciente: Array<Pacientes> = [];
+  exameColunas: Array<PoTableColumn>;
+  switch: boolean = false;
   exameMedico: boolean;
   examePsicotecnico: boolean;
-  nome: string;
-  pacienteCnh: Array<PoSelectOption>;
-  pacienteHabilitacao: Array<PoSelectOption>;
-  medico: Array<PoSelectOption>;
-  psicotecnico: Array<PoSelectOption>;
+  pacienteCnh: Array<PoSelectOption> = [];
+  pacienteHabilitacao: Array<PoSelectOption> = [];
+  medico: Array<PoSelectOption> = [];
+  psicotecnico: Array<PoSelectOption> = [];
   message: string;
   title: string;
   literalsAlert: PoDialogAlertLiterals;
   exameSelecionado: any;
+
+
 
   public readonly actions: Array<PoPageAction> = [
     { label: 'Cadastrar Paciente', action: this.openQuestionnaire.bind(this), icon: 'po-icon-user-add' },
@@ -71,32 +67,28 @@ export class ExamesComponent implements OnInit {
   actionOptions: Array<string>;
   action: string;
 
-
   constructor(private exameService: ExamesService,
-              private poNotification: PoNotificationService,
-              private exameLength: GlobalService,
-              private poAlert: PoDialogService,
-              private boletoService: BoletoService) { }
+    private poNotification: PoNotificationService,
+    private exameLength: GlobalService,
+    private poAlert: PoDialogService,
+    private boletoService: BoletoService) { 
+
+    }
 
   ngOnInit() {
     this.exameService.listaExamess().subscribe(value => {
-      this.hiringProcessesColumns = this.getColumns();
-      this.hiringProcesses = value['exames'];
+      this.exameColunas = this.getColumns();
+      this.exameValue = value['exames'];
       this.exameLength.examesObservable.next(value['exames'].length);
 
     });
-    this.pacienteCnh = [];
-    this.pacienteHabilitacao = [];
-    this.medico = [];
-    this.psicotecnico = [];
-    this.switch = undefined;
     this.carregaCnh();
     this.carregaHabilitacao();
+    this.paciente['data_avaliacao'] = new Date();
   }
 
   carregaCnh() {
     this.exameService.buscaCnh().subscribe(value => {
-      //  this.pacienteCnh = [];
       value['cnh'].forEach(element => {
         element.label = element.descricao;
         element.value = element.id;
@@ -162,9 +154,9 @@ export class ExamesComponent implements OnInit {
   }
 
   removerExame() {
-    this.hiringProcesses.forEach((item, index) => {
+    this.exameValue.forEach((item, index) => {
       if (item.id === this.exameSelecionado.id) {
-        this.hiringProcesses.splice(index, 1);
+        this.exameValue.splice(index, 1);
       }
     });
   }
