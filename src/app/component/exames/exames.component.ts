@@ -7,12 +7,8 @@ import { PoNotificationService } from '@portinari/portinari-ui';
 import { NgForm } from '@angular/forms';
 import { GlobalService } from 'src/app/service/global.service';
 import { BoletoService } from 'src/app/service/boleto.service';
-<<<<<<< HEAD
 import { ModalResultadoComponent } from 'src/app/modal/modal-resultado/modal-resultado.component';
 import { Pacientes } from 'src/app/interface/pacientes';
-=======
-import { Pacientes } from 'src/app/interface/pacientes'
->>>>>>> dfe707574f78ca0d35f8e6fc7d719b8541a7b1e9
 
 @Component({
   selector: 'app-exames',
@@ -24,7 +20,6 @@ export class ExamesComponent implements OnInit {
   items: Array<object>;
   exameValue: Array<any>;
   status: Array<any>;
-<<<<<<< HEAD
   disclaimerGroup;
   paciente: Pacientes = this.initPaciente();
   hiringProcessesColumns: Array<PoTableColumn>;
@@ -33,11 +28,6 @@ export class ExamesComponent implements OnInit {
   jobDescriptionOptions: Array<PoMultiselectOption>;
   statusOptions: Array<PoCheckboxGroupOption>;
   switch: boolean;
-=======
-  paciente: Array<Pacientes> = [];
-  exameColunas: Array<PoTableColumn>;
-  switch: boolean = false;
->>>>>>> dfe707574f78ca0d35f8e6fc7d719b8541a7b1e9
   exameMedico: boolean;
   examePsicotecnico: boolean;
   pacienteCnh: Array<PoSelectOption> = [];
@@ -84,6 +74,7 @@ export class ExamesComponent implements OnInit {
   literalsConfirm: PoDialogConfirmLiterals;
   actionOptions: Array<string>;
   action: string;
+  exameColunas: PoTableColumn[];
 
   constructor(private exameService: ExamesService,
     private poNotification: PoNotificationService,
@@ -102,20 +93,12 @@ export class ExamesComponent implements OnInit {
     });
     this.carregaCnh();
     this.carregaHabilitacao();
-<<<<<<< HEAD
 
   }
 
   carregaCnh() {
     this.exameService.buscaCnh().subscribe(value  => {
       //  this.pacienteCnh = [];
-=======
-    this.paciente['data_avaliacao'] = new Date();
-  }
-
-  carregaCnh() {
-    this.exameService.buscaCnh().subscribe(value => {
->>>>>>> dfe707574f78ca0d35f8e6fc7d719b8541a7b1e9
       value['cnh'].forEach(element => {
         element.label = element.descricao;
         element.value = element.id;

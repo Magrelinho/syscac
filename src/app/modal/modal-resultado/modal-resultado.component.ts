@@ -17,17 +17,16 @@ export class ModalResultadoComponent implements OnInit {
 
   ngOnInit() {
     this.examesResultado = [];
-    this.examesResultado['id_status'];
+   // this.examesResultado['id_status'];
   }
 
   openResultado(obj) {
 
   //  obj(element => {
-     // element.label = element.descricao;
-    //  element.value = element.id_status;
-      this.examesResultado['value'] = obj.id_status;
-      this.examesResultado['label'] = obj.descricao;
-
+    // element.label = element.descricao;
+    // element.value = element.id_status;
+    // this.examesResultado['value'] = obj.id_status;
+    // this.examesResultado['label'] = obj.descricao;
 
    // });
 
