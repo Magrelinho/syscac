@@ -7,6 +7,8 @@ import { PoNotificationService } from '@portinari/portinari-ui';
 import { NgForm } from '@angular/forms';
 import { GlobalService } from 'src/app/service/global.service';
 import { BoletoService } from 'src/app/service/boleto.service';
+import { ModalResultadoComponent } from 'src/app/modal/modal-resultado/modal-resultado.component';
+import { Pacientes } from 'src/app/interface/pacientes';
 
 @Component({
   selector: 'app-exames',
@@ -19,12 +21,11 @@ export class ExamesComponent implements OnInit {
   hiringProcesses: Array<any>;
   status: Array<any>;
   disclaimerGroup;
-  paciente = { data_avaliacao: new Date() };
+  paciente: Pacientes = this.initPaciente();
   hiringProcessesColumns: Array<PoTableColumn>;
   hiringProcessesFiltered: Array<object>;
   jobDescription: Array<string> = [];
   jobDescriptionOptions: Array<PoMultiselectOption>;
-  labelFilter = '';
   statusOptions: Array<PoCheckboxGroupOption>;
   switch: boolean;
   exameMedico: boolean;
@@ -45,7 +46,7 @@ export class ExamesComponent implements OnInit {
 
   public readonly actionsTable: Array<PoTableAction> = [
     { label: 'Gerar Boleto', action: this.geraBoleto.bind(this), icon: 'po-icon-bar-code' },
-    { label: 'Resultado', action: this.openQuestionnaire.bind(this), icon: 'po-icon-target' },
+    { label: 'Resultado', action: this.openResultado.bind(this), icon: 'po-icon-target' },
     { label: 'Remover', action: this.removerExame.bind(this), icon: 'po-icon-delete' },
   ];
 
@@ -67,6 +68,8 @@ export class ExamesComponent implements OnInit {
 
   @ViewChild('optionsForm', { static: true }) form: NgForm;
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
+  @ViewChild(ModalResultadoComponent, { static: true }) poModalResultado: ModalResultadoComponent;
+
   literalsConfirm: PoDialogConfirmLiterals;
   actionOptions: Array<string>;
   action: string;
@@ -92,10 +95,11 @@ export class ExamesComponent implements OnInit {
     this.switch = undefined;
     this.carregaCnh();
     this.carregaHabilitacao();
+
   }
 
   carregaCnh() {
-    this.exameService.buscaCnh().subscribe(value => {
+    this.exameService.buscaCnh().subscribe(value  => {
       //  this.pacienteCnh = [];
       value['cnh'].forEach(element => {
         element.label = element.descricao;
@@ -105,6 +109,11 @@ export class ExamesComponent implements OnInit {
     });
   }
 
+  openResultado() {
+
+    this.poModalResultado.openResultado(this.exameSelecionado);
+
+  }
   carregaHabilitacao() {
     this.exameService.buscahabilitacao().subscribe(value => {
       value['habilitacao'].forEach(element => {
@@ -217,6 +226,18 @@ export class ExamesComponent implements OnInit {
 
   openModal() {
     this.poModal.open();
+  }
+
+  private initPaciente(): Pacientes {
+    return {
+      data_avaliacao: new Date(),
+      cnh_id: -1,
+      nome: '',
+      cpf: '',
+      habilita_id: -1,
+      medico_id: -1,
+      psico_id: -1
+    };
   }
 
 }

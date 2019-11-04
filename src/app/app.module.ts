@@ -12,6 +12,7 @@ import { PacientesComponent } from './component/pacientes/pacientes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExamesComponent } from './component/exames/exames.component';
 import { FormsModule } from '@angular/forms';
+import { ModalResultadoComponent } from './modal/modal-resultado/modal-resultado.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     LoginComponent,
     HomeComponent,
     PacientesComponent,
-    ExamesComponent
+    ExamesComponent,
+    ModalResultadoComponent
       ],
   imports: [
     BrowserModule,
