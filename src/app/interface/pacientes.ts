@@ -7,3 +7,8 @@ export interface Pacientes {
     medico_id?: number;
     psico_id?: number;
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> dfe707574f78ca0d35f8e6fc7d719b8541a7b1e9
