@@ -17,7 +17,7 @@ export class ModalResultadoComponent implements OnInit {
 
   ngOnInit() {
     this.examesResultado = [];
-   // this.examesResultado['id_status'];
+    this.examesResultado['id_status'];
   }
 
   openResultado(obj) {
