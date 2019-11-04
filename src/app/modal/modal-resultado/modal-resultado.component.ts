@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PoModalComponent, PoSelectOption } from '@portinari/portinari-ui';
+import { PoModalComponent, PoSelectOption, PoModalAction } from '@portinari/portinari-ui';
 
 @Component({
   selector: 'app-modal-resultado',
@@ -8,8 +8,9 @@ import { PoModalComponent, PoSelectOption } from '@portinari/portinari-ui';
 })
 export class ModalResultadoComponent implements OnInit {
 
+
+  exames:object = {};
   examesResultado: Array<PoSelectOption>;
-  exames = [];
 
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
 
@@ -17,22 +18,44 @@ export class ModalResultadoComponent implements OnInit {
 
   ngOnInit() {
     this.examesResultado = [];
-    this.examesResultado['id_status'];
   }
 
-  openResultado(obj) {
-
-  //  obj(element => {
-    // element.label = element.descricao;
-    // element.value = element.id_status;
-    // this.examesResultado['value'] = obj.id_status;
-    // this.examesResultado['label'] = obj.descricao;
-
-   // });
-
+  openResultado(obj: Array<PoSelectOption>) {
+    this.carregaStatus()
     this.poModal.open();
   }
 
+  private carregaStatus() {
+    this.examesResultado = [
+      { 'value': 1, 'label': 'Apto' },
+      { 'value': 2, 'label': 'Inapto', },
+      { 'value': 3, 'label': 'Inapto Temporario', },
+      { 'value': 4, 'label': 'Restricao', },
+      { 'value': 5, 'label': 'EM ANDAMENTO' }]
+    return this.examesResultado;
+  }
 
+  close: PoModalAction = {
+    action: () => {
+      this.closeModal();
+    },
+    label: 'Cancelar',
+    danger: true
+  };
+
+  confirm: PoModalAction = {
+    action: () => {
+      this.atualizaExame();
+    },
+    label: 'Confirmar'
+  };
+
+  closeModal() {
+    this.poModal.close();
+  }
+
+  atualizaExame() {
+    console.log(this.exames);
+  }
 
 }

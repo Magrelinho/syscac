@@ -80,9 +80,9 @@ export class ExamesComponent implements OnInit {
     private poNotification: PoNotificationService,
     private exameLength: GlobalService,
     private poAlert: PoDialogService,
-    private boletoService: BoletoService) { 
+    private boletoService: BoletoService) {
 
-    }
+  }
 
   ngOnInit() {
     this.exameService.listaExamess().subscribe(value => {
@@ -97,7 +97,7 @@ export class ExamesComponent implements OnInit {
   }
 
   carregaCnh() {
-    this.exameService.buscaCnh().subscribe(value  => {
+    this.exameService.buscaCnh().subscribe(value => {
       //  this.pacienteCnh = [];
       value['cnh'].forEach(element => {
         element.label = element.descricao;
@@ -112,6 +112,7 @@ export class ExamesComponent implements OnInit {
     this.poModalResultado.openResultado(this.exameSelecionado);
 
   }
+
   carregaHabilitacao() {
     this.exameService.buscahabilitacao().subscribe(value => {
       value['habilitacao'].forEach(element => {

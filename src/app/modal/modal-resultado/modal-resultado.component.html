@@ -1,11 +1,14 @@
-<po-modal>
+<po-modal  p-title="Atualizar exames" [p-primary-action]="confirm" [p-secondary-action]="close">
     <po-select p-label="Status" 
-                p-placeholder="Selecione o status" 
+                p-placeholder="Selecione novo status" 
                 [p-options]="examesResultado"
-                
-                name="id_status"></po-select>
+                [(ngModel)]="exames.id_status"
+                name="id_status">
+    </po-select>
 
-    <po-textarea name="textarea" p-label="Portinari Textarea">
+    <po-textarea name="obs" 
+                 p-label="Observaçoes"
+                 [(ngModel)]="exames.obs">
     </po-textarea>
 
   <!--  [(ngModel)]="exames.id_status" -->
