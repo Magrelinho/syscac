@@ -56,6 +56,7 @@ export class ModalResultadoComponent implements OnInit {
 
   atualizaExame() {
     console.log(this.exames);
+    this.closeModal();
   }
 
 }

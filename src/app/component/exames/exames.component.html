@@ -6,46 +6,8 @@
 	</po-table>
 </po-page-list>
 
-<po-modal p-title="Cadastrar Exames" [p-primary-action]="confirm" [p-secondary-action]="close">
-	<po-tabs>
-		<po-tab p-small=true
-				p-label="Dados Paciente"
-				p-active=true>
-		<po-input name="nome" [(ngModel)]="paciente.nome" p-label="Nome">
-		</po-input>
-		<po-input name="cpf" [(ngModel)]="paciente.cpf" p-label="CPF">
-		</po-input>
-	</po-tab>
+<!-- Abre modal cadastro de exames-->
+<app-modal-exames> </app-modal-exames>
 
-	<po-tab p-small= true
-			p-label="Dados Exames">
-		<po-select p-label="CNH" p-placeholder="Selecione a Cnh desejada" [p-options]="pacienteCnh"
-			[(ngModel)]="paciente.cnh_id" name="cnh_id">
-		</po-select>
-		<po-select p-label="Habilitacao Pretendida" p-placeholder="Selecione habilitação pretendida"
-			[(ngModel)]="paciente.habilita_id" [p-options]="pacienteHabilitacao" name=habilita_id>
-		</po-select>
-
-		<po-datepicker name="data_avaliacao" [(ngModel)]="paciente.data_avaliacao" p-label="Data Avaliacao">
-		</po-datepicker>
-
-		<po-switch (p-change)="selecionaExameMedico()" p-disabled="boolean" p-label="Exame Medico" p-label-off="Nao"
-			p-label-on="Exame medico selecionado" p-label-position="PoSwitchLabelPosition" name="exameMedico" p-value>
-		</po-switch>
-		<po-select [p-disabled]='!exameMedico' [(ngModel)]="paciente.medico_id" [p-options]="medico" name="medico_id">
-		</po-select>
-
-		<po-switch (p-change)="selecionaExamePsicotecnico()" p-disabled="boolean" p-label="Exame Psicotecnico"
-			p-label-off="Nao" p-label-on="Exame Psicotecnico selecionado" p-label-position="PoSwitchLabelPosition"
-			name="Exame Psicotecnico">
-		</po-switch>
-
-		<po-select name="psico_id" [p-options]="psicotecnico" [(ngModel)]="paciente.psico_id"
-			[p-disabled]='!examePsicotecnico'>
-		</po-select>
-	</po-tab>
-	</po-tabs>
-</po-modal>
-
-
+<!-- Abre modal para atualizar o resultado do exame -->
 <app-modal-resultado> </app-modal-resultado>
