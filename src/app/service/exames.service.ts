@@ -28,4 +28,9 @@ export class ExamesService {
     return this.http.get(`/controller/profissional.php?tipo=${params}`);
   }
 
+  public removerExame(obj: number) {
+
+    return this.http.delete('/controller/exame.php',  );
+  }
+
 }

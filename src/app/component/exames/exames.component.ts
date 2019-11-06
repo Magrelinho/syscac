@@ -91,6 +91,12 @@ export class ExamesComponent implements OnInit {
   }
 
   removerExame() {
+
+    this.exameService.removerExame(this.exameSelecionado['id']).subscribe(value => {
+      console.log(value)
+
+    });
+
     this.exameValue.forEach((item, index) => {
       if (item.id === this.exameSelecionado.id) {
         this.exameValue.splice(index, 1);
