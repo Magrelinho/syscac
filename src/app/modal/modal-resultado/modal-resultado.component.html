@@ -3,9 +3,10 @@
                 p-placeholder="Selecione novo status" 
                 [p-options]="examesResultado"
                 [(ngModel)]="exames.id_status"
+                (p-change)="habilitaRestricao()"
                 name="id_status">
     </po-select>
-{{exames.restricaoTrue}}
+
     <po-textarea name="obs"
                  [p-disabled]='exames.restricaoTrue'
                  p-label="Observaçoes"
