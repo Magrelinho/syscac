@@ -14,7 +14,8 @@ import { ExamesComponent } from './component/exames/exames.component';
 import { FormsModule } from '@angular/forms';
 import { ModalResultadoComponent } from './modal/modal-resultado/modal-resultado.component';
 import { ModalExamesComponent } from './modal/modal-exames/modal-exames.component';
-enableProdMode()
+
+enableProdMode();
 @NgModule({
   declarations: [
     AppComponent,
