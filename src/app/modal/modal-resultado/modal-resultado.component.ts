@@ -38,7 +38,7 @@ export class ModalResultadoComponent implements OnInit {
   //  this.exames['restricaoTrue'] = true;
   }
 
-  openResultado(obj: Array<PoSelectOption>) {
+  openResultado(obj: string) {
     this.exames.id_status = obj['id_status'];
     this.exames.id = obj['id'];
 

@@ -21,16 +21,6 @@ export class ModalExamesComponent implements OnInit {
   medico: Array<PoSelectOption> = [];
   psicotecnico: Array<PoSelectOption> = [];
 
-  @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
-
-  constructor(private poNotification: PoNotificationService,
-              private exameService: ExamesService) { }
-
-  ngOnInit() {
-    this.carregaCnh();
-    this.carregaHabilitacao();
-  }
-
   close: PoModalAction = {
     action: () => {
       this.closeModal();
@@ -45,6 +35,18 @@ export class ModalExamesComponent implements OnInit {
     },
     label: 'Confirmar'
   };
+
+
+  @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
+
+  constructor(private poNotification: PoNotificationService,
+              private exameService: ExamesService) { }
+
+  ngOnInit() {
+    this.carregaCnh();
+    this.carregaHabilitacao();
+  }
+
 
   closeModal() {
     this.poModal.close();

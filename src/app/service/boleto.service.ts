@@ -13,8 +13,8 @@ export class BoletoService {
       walletId: obj.walletId,
       asaas_id: obj.asaas_id
     };
-    
-    return this.http.post('http://api.syscac.com.br/controller/asaas.php', obj);
+
+    return this.http.post('/controller/asaas.php', obj);
 
   }
 }

@@ -13,8 +13,8 @@ export class LoginService {
       login: obj.login,
       senha: obj.password
     };
-    
-    return this.http.post('http://api.syscac.com.br/controller/usuario.php', obj);
+
+    return this.http.post('/controller/usuario.php', obj);
 
   }
 

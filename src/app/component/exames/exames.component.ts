@@ -26,6 +26,7 @@ export class ExamesComponent implements OnInit {
   actionOptions: Array<string>;
   action: string;
   exameColunas: PoTableColumn[];
+  event: string;
 
   public readonly actions: Array<PoPageAction> = [
     { label: 'Cadastrar Paciente', action: this.cadastrarPaciente.bind(this), icon: 'po-icon-user-add' },
@@ -45,9 +46,9 @@ export class ExamesComponent implements OnInit {
 
 
   constructor(private exameService: ExamesService,
-    private exameLength: GlobalService,
-    private poAlert: PoDialogService,
-    private boletoService: BoletoService) { }
+              private exameLength: GlobalService,
+              private poAlert: PoDialogService,
+              private boletoService: BoletoService) { }
 
   close: PoModalAction = {
     action: () => {
@@ -73,16 +74,17 @@ export class ExamesComponent implements OnInit {
     this.actionOptions = [];
   }
 
-  openResultado() {
-    this.poModalResultado.openResultado(this.exameSelecionado);
+  openResultado(row: string) {
+    this.exameSelecionado = row;
+    this.poModalResultado.openResultado(row);
   }
 
-  geraBoleto() {
+  geraBoleto(row: string) {
     this.poAlert.confirm({
       literals: this.literalsConfirm,
       title: 'Gerar boleto para cobrança',
-      message: 'Deseja gerar boleto de cobrança para ' + this.exameSelecionado.nome + '?',
-      confirm: () => this.confirmaBoleto(),
+      message: 'Deseja gerar boleto de cobrança para ' + row['nome'] + '?',
+      confirm: () => this.confirmaBoleto(row),
     });
   }
 
@@ -90,35 +92,27 @@ export class ExamesComponent implements OnInit {
     this.poModalCadrastroExame.openCadastro();
   }
 
-  removerExame() {
-
-    this.exameService.removerExame(this.exameSelecionado['id']).subscribe(value => {
-      console.log(value)
+  removerExame(row: string) {
+    this.exameService.removerExame(row['id']).subscribe(value => {
+      console.log(value);
 
     });
 
     this.exameValue.forEach((item, index) => {
-      if (item.id === this.exameSelecionado.id) {
+      if (item.id === row['id']) {
         this.exameValue.splice(index, 1);
       }
     });
   }
 
-  confirmaBoleto() {
-    this.boletoService.gerarBoleto(this.exameSelecionado).subscribe(value => {
+  confirmaBoleto(row: string) {
+    this.boletoService.gerarBoleto(row).subscribe(value => {
       console.log(value);
     });
   }
 
   closeModal() {
     this.poModal.close();
-  }
-
-  linhaSelecionada(row: any) {
-    if (row) {
-      this.exameSelecionado = row;
-      console.log(row);
-    }
   }
 
   getColumns(): Array<PoTableColumn> {
