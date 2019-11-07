@@ -29,8 +29,11 @@ export class ExamesService {
   }
 
   public removerExame(obj: number) {
+    return this.http.delete(`/controller/exame.php?id=${obj}`);
+  }
 
-    return this.http.delete('/controller/exame.php',  );
+  public updateResultado(obj) {
+    return this.http.put('/controller/exame.php', {obj});
   }
 
 }

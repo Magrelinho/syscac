@@ -5,9 +5,10 @@
                 [(ngModel)]="exames.id_status"
                 name="id_status">
     </po-select>
-
-    <po-textarea name="obs" 
+{{exames.restricaoTrue}}
+    <po-textarea name="obs"
+                 [p-disabled]='exames.restricaoTrue'
                  p-label="Observaçoes"
-                 [(ngModel)]="exames.obs">
+                 [(ngModel)]="exames.restricao">
     </po-textarea>
 </po-modal>
