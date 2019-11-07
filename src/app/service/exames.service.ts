@@ -9,31 +9,31 @@ export class ExamesService {
   constructor(private http: HttpClient, ) { }
 
   public listaExamess() {
-    return this.http.get('/controller/exame.php', {});
+    return this.http.get('http://api.syscac.com.br/controller/exame.php', {});
   }
 
   public cadastraExame(obj) {
-    return this.http.post('/controller/paciente.php', { obj });
+    return this.http.post('http://api.syscac.com.br/controller/paciente.php', { obj });
   }
 
   public buscaCnh() {
-    return this.http.get('/controller/cnh.php', {});
+    return this.http.get('http://api.syscac.com.br/controller/cnh.php', {});
   }
 
   public buscahabilitacao() {
-    return this.http.get('/controller/habilitacao.php', {});
+    return this.http.get('http://api.syscac.com.br/controller/habilitacao.php', {});
   }
 
   public buscaMedicos(params: any) {
-    return this.http.get(`/controller/profissional.php?tipo=${params}`);
+    return this.http.get(`http://api.syscac.com.br/controller/profissional.php?tipo=${params}`);
   }
 
   public removerExame(obj: number) {
-    return this.http.delete(`/controller/exame.php?id=${obj}`);
+    return this.http.delete(`http://api.syscac.com.br/controller/exame.php?id=${obj}`);
   }
 
   public updateResultado(obj) {
-    return this.http.put('/controller/exame.php', {obj});
+    return this.http.put('http://api.syscac.com.br/controller/exame.php', {obj});
   }
 
 }
