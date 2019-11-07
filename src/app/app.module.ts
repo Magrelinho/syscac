@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, enableProdMode } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +14,7 @@ import { ExamesComponent } from './component/exames/exames.component';
 import { FormsModule } from '@angular/forms';
 import { ModalResultadoComponent } from './modal/modal-resultado/modal-resultado.component';
 import { ModalExamesComponent } from './modal/modal-exames/modal-exames.component';
-
+enableProdMode()
 @NgModule({
   declarations: [
     AppComponent,
