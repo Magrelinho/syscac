@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PoMenuItem } from '@portinari/portinari-ui';
 import { GlobalService } from 'src/app/service/global.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +11,10 @@ import { GlobalService } from 'src/app/service/global.service';
 export class HomeComponent implements OnInit {
 
   menuItemSelected: string;
-  teste: number;
+  logo: any;
 
   menus: Array<PoMenuItem> = [
+    { label: 'Profissionais', icon: 'po-icon-user', shortLabel: 'Profi', link: '/home/profissional'},
     { label: 'Pacientes', icon: 'po-icon-user', shortLabel: 'Pacientes', link: '/home/pacientes' },
     // tslint:disable-next-line: max-line-length
     { label: 'Exames', action: this.buscabadge, icon: 'po-icon-document-filled', shortLabel: 'Exames', link: '/home/exames', badge: { value: 0 } },
@@ -23,9 +25,12 @@ export class HomeComponent implements OnInit {
       ]
     }];
 
-  constructor(private exameLength: GlobalService) { }
+  constructor(private exameLength: GlobalService,
+              private teste : DomSanitizer) { }
 
   ngOnInit() {
+    this.logo = this.teste.bypassSecurityTrustResourceUrl('C:/syscac/syscac/barbearia.jpg')
+    
   }
 
   printMenuAction(menu: PoMenuItem) {
@@ -35,7 +40,7 @@ export class HomeComponent implements OnInit {
   buscabadge() {
     this.exameLength.examesObservable.subscribe(value => {
 
-      this.menus[1].badge.value = value;
+      this.menus[2].badge.value = value;
 
     })
   }
