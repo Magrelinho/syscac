@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { ModalResultadoComponent } from './modal/modal-resultado/modal-resultado.component';
 import { ModalExamesComponent } from './modal/modal-exames/modal-exames.component';
 import { ProfissionalComponent } from './component/profissional/profissional.component';
+import { ModalProfissionalComponent } from './modal/modal-profissional/modal-profissional.component';
 
 enableProdMode();
 @NgModule({
@@ -26,7 +27,8 @@ enableProdMode();
     ExamesComponent,
     ModalResultadoComponent,
     ModalExamesComponent,
-    ProfissionalComponent
+    ProfissionalComponent,
+    ModalProfissionalComponent
       ],
   imports: [
     BrowserModule,

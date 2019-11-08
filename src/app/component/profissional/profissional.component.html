@@ -1,3 +1,12 @@
-<po-page-default>
-        Jeffe
-</po-page-default>
+<po-page-list p-title="Cadastro de profissionais" [p-actions]="actions" [p-filter]='filterSettings'>
+	<po-list-view p-property-title="name" [p-actions]="actionsLista" [p-items]="profissionais">
+        <ng-template p-list-view-content-template let-item>
+            <div class="po-row">
+				<po-info class="po-md-6" p-label="Cpf" [p-value]="item.cpf"></po-info>
+			</div>
+        </ng-template>
+	</po-list-view>
+</po-page-list>
+
+<!-- Abre modal de cadastro de profissional -->
+<app-modal-profissional> </app-modal-profissional>
