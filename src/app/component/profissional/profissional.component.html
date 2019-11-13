@@ -1,10 +1,28 @@
 <po-page-list p-title="Cadastro de profissionais" [p-actions]="actions" [p-filter]='filterSettings'>
-	<po-list-view p-property-title="name" [p-actions]="actionsLista" [p-items]="profissionais">
+	<po-list-view p-property-title="nome" [p-actions]="actionsLista" [p-items]="profissionais">
         <ng-template p-list-view-content-template let-item>
             <div class="po-row">
-				<po-info class="po-md-6" p-label="Cpf" [p-value]="item.cpf"></po-info>
+				<po-info class="po-md-6" p-label="Endereço" [p-value]="item.address"></po-info>
+				<po-info class="po-md-6" p-label="Numero" [p-value]="item.addressNumber"></po-info>
 			</div>
-        </ng-template>
+		</ng-template>
+		
+		<ng-template p-list-view-detail-template let-item>
+			<div class="po-row">
+			  <po-info
+				class="po-md-6 po-lg-3"
+				p-label="Company"
+				[p-value]="item.company">
+			  </po-info>
+		
+			  <po-info
+				class="po-md-6 po-lg-3"
+				p-label="Zip Code"
+				[p-value]="item.zipCode">
+			  </po-info>
+			</div>
+		  </ng-template>
+
 	</po-list-view>
 </po-page-list>
 

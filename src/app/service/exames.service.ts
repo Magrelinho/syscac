@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ExamesService {
 
-  constructor(private http: HttpClient, ) { }
+  constructor(private http: HttpClient) { }
 
   public listaExamess() {
     return this.http.get('/controller/exame.php', {});

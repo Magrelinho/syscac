@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PoPageAction, PoTableColumn, PoListViewAction, PoPageFilter } from '@portinari/portinari-ui';
 import { Profissional } from 'src/app/interface/profissional';
 import { ModalProfissionalComponent } from 'src/app/modal/modal-profissional/modal-profissional.component';
+import { ProfissionalService } from 'src/app/service/profissional.service';
 
 @Component({
   selector: 'app-profissional',
@@ -13,7 +14,7 @@ export class ProfissionalComponent implements OnInit {
   @ViewChild(ModalProfissionalComponent, { static: true }) poModalProfissional: ModalProfissionalComponent;
 
   colunas: PoTableColumn[];
-  profissionais: Array<object>;
+  profissionais: Profissional[];
   profissional: Array<any>;
   action: PoListViewAction;
   labelFilter = '';
@@ -42,10 +43,13 @@ export class ProfissionalComponent implements OnInit {
     placeholder: 'Search'
   };
 
-  constructor() { }
+  constructor(private serviceProfissional: ProfissionalService) { }
 
   ngOnInit() {
-    this.profissional = this.getItems();
+    this.serviceProfissional.buscaProfissionais().subscribe(value => {
+      this.profissionais = value['profissionais'];
+      this.profissional = value['profissionais']
+    });
   }
 
   alterar() {
@@ -64,31 +68,14 @@ export class ProfissionalComponent implements OnInit {
   }
 
   private includeFilter(item, filters) {
-    return filters.some(filter => String(item).toLocaleLowerCase().includes(filter.toLocaleLowerCase()));
+    return filters.some(filter => {
+      return String(item).toLocaleLowerCase().includes(filter.toLocaleLowerCase());
+    });
   }
 
   cadastrar() {
     this.poModalProfissional.openCadastro();
-    this.profissionais = this.getItems();
   }
-
-  getItems() {
-    return [
-      {
-        name: 'Mary Davis',
-        cpf: '121212121'
-      },
-      {
-        name: 'Margaret Garcia',
-        cpf: '154154'
-      },
-      {
-        name: 'Wid traveco',
-        cpf: '242424'
-      },
-    ];
-  }
-
 }
 
 
