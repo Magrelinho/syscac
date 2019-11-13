@@ -1,17 +1,17 @@
 export interface Profissional {
     id?: number;
+    nome?: string;
+    numero?: number; //crm crp
+    categoria_profissional_id?: number; //medico ou pisic
+    email?: string;
+    cpf?: string;
+    entidade_id?: number; //estabelecimento
     address?: string;
     addressNumber?: number;
-    asaas_id?: string;
-    categoria_profissional_id?: number;
-    cpf?: string;
-    email?: string;
-    entidade_id?: number;
-    mobilePhone?: number;
-    nome?: string;
-    numero?: number;
-    phone?: number;
-    postalCode?: string;
     province?: string;
+    postalCode?: string;
+    phone?: number;
+    mobilePhone?: number;
     walletId?: string;
+    asaas_id?: string;
 }
