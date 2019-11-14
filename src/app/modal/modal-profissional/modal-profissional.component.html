@@ -1,5 +1,23 @@
-<po-modal  p-title="Profissional" >
+<po-modal p-title="Profissional">
+    <div class="po-row">
+        <po-input class="po-md-12" p-clean p-icon="po-icon-user" p-label="Nome">
+        </po-input>
+    </div>
 
-    
+    <div class="po-row">
+        <po-input class="po-lg-9" p-clean p-icon="po-icon-pin" 
+                [(ngModel)]='profissional.address' p-label="Endereço">
+        </po-input>
+
+        <po-number class="po-lg-3" 
+                [(ngModel)]='profissional.addressNumber' 
+                p-label="Numero" 
+                p-clean>
+        </po-number>
+    </div>
+
+    <div class="po-row">
+        <po-email class="po-lg-6" p-label="Email" p-clean>
+        </po-email>
+    </div>
 </po-modal>
-       

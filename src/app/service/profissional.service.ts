@@ -11,5 +11,9 @@ export class ProfissionalService {
   public buscaProfissionais() {
     return this.http.get(`/controller/profissional.php`);
   }
+
+  public buscaCep(cep: string) {
+    return this.http.get(`http://viacep.com.br/ws/${cep}/json/`);
+  }
   //?tipo=${params}
 }
