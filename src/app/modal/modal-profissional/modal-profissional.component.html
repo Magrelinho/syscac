@@ -15,7 +15,7 @@
 
         <po-tab p-small=true p-label="Dados complementares">
             <div class="po-md-12">
-                <po-number class="po-lg-3" [(ngModel)]='profissional.cep' p-label="Busca Cep" p-blur='buscaEndereco(profissional.cep)'
+                <po-number class="po-lg-3" [(ngModel)]='profissional.cep' p-label="Busca Cep" (p-change)='buscaEndereco(profissional.cep)'
                 p-clean>
                 </po-number>
             </div>
