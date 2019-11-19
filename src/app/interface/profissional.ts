@@ -14,4 +14,5 @@ export interface Profissional {
     mobilePhone?: number;
     walletId?: string;
     asaas_id?: string;
+    cep?: number;
 }

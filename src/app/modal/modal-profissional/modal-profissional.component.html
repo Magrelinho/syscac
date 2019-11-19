@@ -1,23 +1,33 @@
-<po-modal p-title="Profissional">
-    <div class="po-row">
-        <po-input class="po-md-12" p-clean p-icon="po-icon-user" p-label="Nome">
-        </po-input>
-    </div>
+<po-modal p-title="Profissional" p-size='auto'>
+    <po-tabs>
+        <po-tab p-small=true p-label="Dados pessoais" p-active=true>
+            <po-input class="po-md-9" p-clean p-icon="po-icon-user" p-label="Nome">
+            </po-input>
+            <po-number class="po-lg-3" [(ngModel)]='profissional.numero' p-label="CRM/CRP" name='numero' p-clean>
+            </po-number>
+            <po-select p-label='Profissional' class="po-md-12" [(ngModel)]="profissional.categoria_profissional_id"
+                [p-options]="categorias" name="categoria_profissional_id">
+            </po-select>
 
-    <div class="po-row">
-        <po-input class="po-lg-9" p-clean p-icon="po-icon-pin" 
-                [(ngModel)]='profissional.address' p-label="Endereço">
-        </po-input>
+            <po-input class="po-lg-6" p-clean [(ngModel)]='profissional.cpf' name='cpf' p-label="Cpf">
+            </po-input>
+        </po-tab>
 
-        <po-number class="po-lg-3" 
-                [(ngModel)]='profissional.addressNumber' 
-                p-label="Numero" 
+        <po-tab p-small=true p-label="Dados complementares">
+            <div class="po-md-12">
+                <po-number class="po-lg-3" [(ngModel)]='profissional.cep' p-label="Busca Cep" p-blur='buscaEndereco(profissional.cep)'
                 p-clean>
-        </po-number>
-    </div>
+                </po-number>
+            </div>
+            <po-input class="po-lg-9" p-clean p-icon="po-icon-pin" [(ngModel)]='profissional.address'
+                p-label="Endereço">
+            </po-input>
 
-    <div class="po-row">
-        <po-email class="po-lg-6" p-label="Email" p-clean>
-        </po-email>
-    </div>
+            <po-number class="po-lg-3" [(ngModel)]='profissional.addressNumber' p-label="Numero" p-clean>
+            </po-number>
+            <po-email class="po-lg-6" p-label="Email" p-clean>
+            </po-email>
+        </po-tab>
+    </po-tabs>
+
 </po-modal>

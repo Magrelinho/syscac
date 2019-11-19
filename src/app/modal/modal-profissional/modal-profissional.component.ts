@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PoModalAction, PoModalComponent } from '@portinari/portinari-ui';
+import { PoModalAction, PoModalComponent, PoSelectOption } from '@portinari/portinari-ui';
 import { ProfissionalService } from 'src/app/service/profissional.service';
 import { Cep } from '../../interface/cep';
 import { Profissional } from 'src/app/interface/profissional';
@@ -9,13 +9,19 @@ import { Profissional } from 'src/app/interface/profissional';
   styleUrls: ['./modal-profissional.component.css']
 })
 
-
-
 export class ModalProfissionalComponent implements OnInit {
 
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
 
   profissional: Profissional[] = [];
+  categoria: PoSelectOption;
+  // categorias: Array<PoSelectOption>;
+
+  public readonly categorias: Array<PoSelectOption> = [
+    { value: '1', label: 'Médico' },
+    { value: '2', label: 'Psicólogo' }
+  ];
+
 
   close: PoModalAction = {
     action: () => {
@@ -44,15 +50,40 @@ export class ModalProfissionalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initiProfissional();
+
   }
 
   openCadastro() {
-    this.ServiceProfissional.buscaCep('89207440').subscribe(value => {
-      
-      console.log(value);
+    this.poModal.open();
+  }
+
+  buscaEndereco(param) {
+
+    this.ServiceProfissional.buscaCep(param).subscribe(value => {
       this.profissional['address'] = value['logradouro'];
 
     });
-    this.poModal.open();
+  }
+
+  private initiProfissional(): Profissional {
+
+    return {
+      nome: '',
+      numero: null,
+      categoria_profissional_id: null,
+      email: '',
+      cpf: '',
+      entidade_id: null, //estabelecimento
+      address: '',
+      addressNumber: null,
+      province: '',
+      postalCode: '',
+      phone: null,
+      mobilePhone: null,
+      walletId: '',
+      asaas_id: '',
+      cep: null,
+    };
   }
 }
